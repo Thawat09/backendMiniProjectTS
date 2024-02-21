@@ -1,10 +1,10 @@
-// นำเข้าชนิดของข้อมูล Request และ Response จาก Express framework
-import { Request, Response } from 'express';
+//TODO นำเข้าชนิดของข้อมูล
+import { Request, Response } from 'express'; //? Request และ Response จาก Express framework
 
-// นำเข้าฟังก์ชัน validationResult จาก express-validator เพื่อตรวจสอบความถูกต้องของข้อมูล
-import { validationResult } from 'express-validator';
+//TODO นำเข้าฟังก์ชัน
+import { validationResult } from 'express-validator'; //? validationResult จาก express-validator เพื่อตรวจสอบความถูกต้องของข้อมูล
 
-// ฟังก์ชัน indexController ที่จะใช้ในการควบคุมการทำงานของเส้นทาง
+//TODO ฟังก์ชัน indexController ที่จะใช้ในการควบคุมการทำงานของเส้นทาง
 const indexController = (req: Request, res: Response) => {
     // ตรวจสอบความถูกต้องของข้อมูลที่ถูกส่งมากับคำขอ
     const errors = validationResult(req);
@@ -19,5 +19,5 @@ const indexController = (req: Request, res: Response) => {
     res.send('Hello, TypeScript Express!');
 };
 
-// ส่งออกฟังก์ชัน indexController เพื่อใช้ในส่วนอื่นของแอปพลิเคชัน
+//TODO ส่งออกฟังก์ชัน indexController เพื่อใช้ในส่วนอื่นของแอปพลิเคชัน
 export default indexController;

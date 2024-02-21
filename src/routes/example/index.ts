@@ -1,14 +1,14 @@
-// นำเข้าคลาส Router จาก Express framework
-import { Router } from 'express';
+//TODO นำเข้าคลาส
+import { Router } from 'express'; //? Router จาก Express framework
 
-// นำเข้าคอนโทรลเลอร์ indexController จากโฟลเดอร์ controllers/example/example.controller
-import indexController from '../../controllers/example/example.comtroller';
+//TODO นำเข้าคอนโทรลเลอร์
+import indexController from '../../controllers/example/example.comtroller'; //? indexController จากโฟลเดอร์ controllers/example/example.controller
 
-// สร้างอินสแตนซ์ใหม่ของคลาส Router
+//TODO สร้างอินสแตนซ์ใหม่ของคลาส Router
 const router = Router();
 
-// ใช้ indexController เมื่อมีการเรียกใช้งานเส้นทางหลัก ('/')
+//TODO ใช้ indexController เมื่อมีการเรียกใช้งานเส้นทางหลัก ('/')
 router.use('/', indexController);
 
-// ส่งออกอินสแตนซ์ของ router เพื่อให้ใช้งานในส่วนอื่นของแอปพลิเคชัน
+//TODO ส่งออกอินสแตนซ์ของ router เพื่อให้ใช้งานในส่วนอื่นของแอปพลิเคชัน
 export default router;
