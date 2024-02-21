@@ -16,7 +16,7 @@ const indexController = (req: Request, res: Response) => {
     }
 
     // หากไม่มีข้อผิดพลาด ส่งคำตอบกลับด้วยข้อความ "Hello, TypeScript Express!"
-    res.send('Hello, TypeScript Express!');
+    res.send(`Hello ${req.method}, TypeScript Express!`);
 };
 
 //TODO ส่งออกฟังก์ชัน indexController เพื่อใช้ในส่วนอื่นของแอปพลิเคชัน
