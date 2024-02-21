@@ -6,3 +6,6 @@
 
 # Ignore file package-lock.json
 package-lock.json
+
+# Ignore file log
+*.log

@@ -12,3 +12,4 @@ TypeScript
 8. npm install express-validator //! เพื่อป้องกันการป้องกันการรับข้อมูลไม่ถูกต้องและการโจมตีต่างๆ เช่น SQL Injection หรือ NoSQL Injection
 9. npm install express-rate-limit //! ป้องกันการโจมตีด้วยการเรียกใช้งานเยอะเกินไป
 10. npm install --save-dev @types/morgan //! บันทึกข้อมูลการร้องขอที่เข้ามายังเซิร์ฟเวอร์
+11. npm install log4js //! การเพิ่มการบันทึก logs ลงไฟล์

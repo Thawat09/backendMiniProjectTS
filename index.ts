@@ -1,20 +1,34 @@
-import express, { Request, Response } from 'express';
-import dotenv from 'dotenv';
+import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
-import { validationResult } from 'express-validator';
 import rateLimit from 'express-rate-limit';
 import morgan from 'morgan';
+import log4js from 'log4js';
+import config from './src/configs/app'
+import routes from './src/routes/index';
 
-dotenv.config();
+// กำหนดการตั้งค่าของ log4js
+log4js.configure({
+    appenders: {
+        defaultFileAppender: { type: 'file', filename: './default.log' }, // บันทึก log ทั่วไป
+        errorFileAppender: { type: 'file', filename: './error.log' }, // บันทึก log ที่เกี่ยวกับ error
+        consoleAppender: { type: 'console' }
+    },
+    categories: {
+        default: { appenders: ['defaultFileAppender'], level: 'debug' }, // บันทึก log ทั่วไปที่ระดับ debug
+        http: { appenders: ['consoleAppender'], level: 'trace' }, // แสดง log เกี่ยวกับ HTTP ที่ระดับ trace ที่ console
+        important: { appenders: ['defaultFileAppender', 'consoleAppender'], level: 'error' }, // บันทึก log ที่มีความสำคัญทั้งลงใน default.log และแสดงที่ console ที่ระดับ error
+        error: { appenders: ['errorFileAppender'], level: 'error' } // บันทึก log ที่ระดับ error ที่เกี่ยวกับ error.log
+    }
+});
 
 const app = express();
-const port = process.env.PORT;
+const port = config.port
 
-// จำกัดการเข้าถึง API ให้ทำได้ไม่เกิน 100 ครั้งต่อ 15 นาที
+// จำกัดการเข้าถึง API ให้ทำได้ไม่เกิน 1000 ครั้งต่อ 5 นาที
 const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 100
+    windowMs: 5 * 60 * 1000, // 5 minutes
+    max: 1000
 });
 
 // Middleware
@@ -23,16 +37,11 @@ app.use(cors());
 app.use(limiter);
 app.use(morgan('combined'));
 
+// เพิ่ม middleware ของ log4js
+app.use(log4js.connectLogger(log4js.getLogger('http'), { level: 'auto' }));
+
 // Routes
-app.get('/', [], (req: Request, res: Response) => {
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
-    }
-
-    res.send('Hello, TypeScript Express!');
-});
+app.use('/', routes);
 
 // Start server
 app.listen(port, () => {
