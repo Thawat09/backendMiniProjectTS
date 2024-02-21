@@ -13,3 +13,6 @@ TypeScript
 9. npm install express-rate-limit //! ป้องกันการโจมตีด้วยการเรียกใช้งานเยอะเกินไป
 10. npm install --save-dev @types/morgan //! บันทึกข้อมูลการร้องขอที่เข้ามายังเซิร์ฟเวอร์
 11. npm install log4js //! การเพิ่มการบันทึก logs ลงไฟล์
+12. npm i --save-dev @types/passport-local //! การรับรองตัวตน
+13. npm install --save-dev @types/passport //! install การรับรองตัวตนแบบ types
+14. npm install body-parser //! การแปลงข้อมูลที่ส่งมาใน body
