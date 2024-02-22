@@ -21,3 +21,6 @@ TypeScript
 # Data Base
 1. npm install mongoose express //! mongoose
 2. npm install pg sequelize @types/pg @types/sequelize  //! sequelize
+
+# Token
+1. npm install --save-dev @types/jsonwebtoken //! jwt
