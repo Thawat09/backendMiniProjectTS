@@ -17,3 +17,6 @@ TypeScript
 13. npm install --save-dev @types/passport //! install การรับรองตัวตนแบบ types
 14. npm install body-parser //! การแปลงข้อมูลที่ส่งมาใน body
 15. npm install pm2 -g //! เครื่องมือสำหรับจัดการและให้บริการแอพพลิเคชัน
+
+# Data Base
+1. npm install mongoose express //! mongoose
