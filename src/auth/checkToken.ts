@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 import config from '../configs/app'
 
 //TODO Middleware สำหรับตรวจสอบและถอดรหัส token
-const checkToken = (req: Request, res: Response, next: NextFunction) => {
+const checkToken = async (req: Request, res: Response, next: NextFunction) => {
     // รับ token จาก header, query string หรือ body
     const token = req.headers['authorization'] || req.query.token || req.body.token;
 
@@ -13,16 +13,29 @@ const checkToken = (req: Request, res: Response, next: NextFunction) => {
         return res.status(403).json({ success: false, message: 'ไม่พบ token' });
     }
 
-    // ตรวจสอบและถอดรหัส token
-    jwt.verify(token, config.jwtSecret, (err: jwt.VerifyErrors | null, decoded: any) => {
-        if (err) {
-            // ถ้า token ไม่ถูกต้อง
-            return res.status(401).json({ success: false, message: 'Token ไม่ถูกต้อง' });
-        } else {
-            // ถ้า token ถูกต้องให้เก็บข้อมูลผู้ใช้ใน request object และเรียกฟังก์ชั่นต่อไปในการทำงาน
-            req.user = decoded;
-            next();
-        }
+    try {
+        // ตรวจสอบและถอดรหัส token
+        const decoded = await verifyToken(token);
+
+        // ถ้า token ถูกต้องให้เก็บข้อมูลผู้ใช้ใน request object และเรียกฟังก์ชั่นต่อไปในการทำงาน
+        req.user = decoded;
+        next();
+    } catch (err) {
+        // ถ้า token ไม่ถูกต้อง
+        return res.status(401).json({ success: false, message: 'Token ไม่ถูกต้อง' });
+    }
+};
+
+// ฟังก์ชัน verifyToken สำหรับตรวจสอบและถอดรหัส token โดยใช้ Promise
+const verifyToken = (token: string): Promise<any> => {
+    return new Promise((resolve, reject) => {
+        jwt.verify(token, config.jwtSecret, (err: jwt.VerifyErrors | null, decoded: any) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(decoded);
+            }
+        });
     });
 };
 

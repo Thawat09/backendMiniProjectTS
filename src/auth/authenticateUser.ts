@@ -16,7 +16,7 @@ interface Request extends ExpressRequest {
 //TODO สร้างฟังก์ชัน authenticateUser เพื่อทำการตรวจสอบการยืนยันตัวตนของผู้ใช้
 const authenticateUser = (req: Request, res: Response, next: NextFunction) => {
     // ใช้ passport.authenticate() เพื่อดำเนินการตรวจสอบการยืนยันตัวตน โดยใช้วิธีการ local strategy
-    passport.authenticate('local', (err: any, user: any, info: any) => {
+    passport.authenticate('local', { session: false }, (err: any, user: any, info: any) => {
         // ถ้าเกิดข้อผิดพลาดในระหว่างกระบวนการตรวจสอบ
         if (err) {
             return next(err);

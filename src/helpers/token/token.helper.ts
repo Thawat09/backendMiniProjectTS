@@ -18,8 +18,16 @@ const methods = {
     },
 
     // ตรวจสอบและถอดรหัส token
-    verifyToken: (token: string, callback: (err: VerifyErrors | null, decoded?: any) => void): void => {
-        jwt.verify(token, secretKey, callback);
+    verifyToken: (token: string): Promise<any> => {
+        return new Promise((resolve, reject) => {
+            jwt.verify(token, secretKey, (err: VerifyErrors | null, decoded?: any) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(decoded);
+                }
+            });
+        });
     }
 };
 
