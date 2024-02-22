@@ -5,7 +5,7 @@ import { Request, Response } from 'express'; //? Request และ Response จ�
 import { validationResult } from 'express-validator'; //? validationResult จาก express-validator เพื่อตรวจสอบความถูกต้องของข้อมูล
 
 //TODO ฟังก์ชัน indexController ที่จะใช้ในการควบคุมการทำงานของเส้นทาง
-const indexController = (req: Request, res: Response) => {
+export const indexController = (req: Request, res: Response) => {
     // ตรวจสอบความถูกต้องของข้อมูลที่ถูกส่งมากับคำขอ
     const errors = validationResult(req);
 
@@ -19,5 +19,9 @@ const indexController = (req: Request, res: Response) => {
     res.send(`Hello ${req.method}, TypeScript Express!`);
 };
 
+export const otherController = (req: Request, res: Response) => {
+    // การดำเนินการของฟังก์ชันอื่น ๆ ที่ต้องการ
+};
+
 //TODO ส่งออกฟังก์ชัน indexController เพื่อใช้ในส่วนอื่นของแอปพลิเคชัน
-export default indexController;
+export default { indexController, otherController };
