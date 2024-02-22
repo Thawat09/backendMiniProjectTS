@@ -8,7 +8,7 @@ import example from '../../controllers/example/example.comtroller'; //? indexCon
 const router = Router();
 
 //TODO ใช้ indexController เมื่อมีการเรียกใช้งานเส้นทางหลัก ('/')
-router.get('/', example.indexController);
+router.get('/', example.otherController);
 router.post('/', example.indexController);
 router.put('/', example.indexController);
 router.delete('/', example.indexController);

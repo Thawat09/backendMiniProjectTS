@@ -1,7 +1,7 @@
 //TODO นำเข้าคลาส 
 import { Router } from 'express'; //? Router จาก Express framework
 import config from '../configs/app'; //? นำเข้าการตั้งค่าจากโมดูล 'config'
-import exampleRouter from './example/index'; //? นำเข้าโมดูลของ router เพื่อจัดการเส้นทางตัวอย่าง
+import exampleRouter from './example/example.index'; //? นำเข้าโมดูลของ router เพื่อจัดการเส้นทางตัวอย่าง
 import { authenticateUser } from '../auth/authenticateUser'; //? นำเข้าฟังก์ชัน authenticateUser จากไฟล์ authenticateUser ในโฟลเดอร์ auth
 
 //TODO สร้างอินสแตนซ์ใหม่ของคลาส Router

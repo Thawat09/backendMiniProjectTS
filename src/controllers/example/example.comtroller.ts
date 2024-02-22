@@ -1,8 +1,11 @@
 //TODO นำเข้าชนิดของข้อมูล
-import { Request, Response } from 'express'; //? Request และ Response จาก Express framework
+import { Request, Response } from 'express'; // นำเข้าชนิดของข้อมูล Request และ Response จาก Express framework
 
 //TODO นำเข้าฟังก์ชัน
-import { validationResult } from 'express-validator'; //? validationResult จาก express-validator เพื่อตรวจสอบความถูกต้องของข้อมูล
+import { validationResult } from 'express-validator'; // นำเข้าฟังก์ชัน validationResult จาก express-validator เพื่อตรวจสอบความถูกต้องของข้อมูล
+
+//TODO การนำเข้าเส้นทาง
+import ExampleModel from '../../models/example/example.model';
 
 //TODO ฟังก์ชัน indexController ที่จะใช้ในการควบคุมการทำงานของเส้นทาง
 export const indexController = (req: Request, res: Response) => {
@@ -19,8 +22,19 @@ export const indexController = (req: Request, res: Response) => {
     res.send(`Hello ${req.method}, TypeScript Express!`);
 };
 
-export const otherController = (req: Request, res: Response) => {
-    // การดำเนินการของฟังก์ชันอื่น ๆ ที่ต้องการ
+//TODO ฟังก์ชัน otherController ที่จะใช้ในการดึงข้อมูลจากฐานข้อมูล
+export const otherController = async (req: Request, res: Response) => {
+    try {
+        // ดึงข้อมูลตัวอย่างทั้งหมดจากฐานข้อมูล
+        const examples = await ExampleModel.findAll();
+        // ส่งข้อมูลกลับเป็น JSON
+        res.json(examples);
+    } catch (error) {
+        // หากเกิดข้อผิดพลาดในระหว่างดึงข้อมูล
+        console.error(error);
+        // ส่งคำตอบกลับด้วยสถานะ 500 (Internal Server Error) พร้อมกับข้อความแสดงข้อผิดพลาด
+        res.status(500).json({ message: 'Internal server error' });
+    }
 };
 
 //TODO ส่งออกฟังก์ชัน indexController เพื่อใช้ในส่วนอื่นของแอปพลิเคชัน

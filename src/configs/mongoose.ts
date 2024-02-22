@@ -1,7 +1,7 @@
-// นำเข้า mongoose เพื่อใช้ในการเชื่อมต่อกับ MongoDB
+//TODO นำเข้า mongoose เพื่อใช้ในการเชื่อมต่อกับ MongoDB
 import mongoose from 'mongoose';
 
-// ฟังก์ชันเชื่อมต่อกับฐานข้อมูล MongoDB
+//TODO ฟังก์ชันเชื่อมต่อกับฐานข้อมูล MongoDB
 const connectDB = async () => {
     try {
         // URI สำหรับเชื่อมต่อกับ MongoDB
@@ -17,7 +17,7 @@ const connectDB = async () => {
     }
 };
 
-// ฟังก์ชันตัดการเชื่อมต่อกับฐานข้อมูล MongoDB
+//TODO ฟังก์ชันตัดการเชื่อมต่อกับฐานข้อมูล MongoDB
 const disconnectDB = async () => {
     try {
         // ตัดการเชื่อมต่อกับ MongoDB
@@ -30,5 +30,5 @@ const disconnectDB = async () => {
     }
 };
 
-// ส่งออกฟังก์ชันเชื่อมต่อและตัดการเชื่อมต่อฐานข้อมูล MongoDB เพื่อให้สามารถนำไปใช้งานได้ในโมดูลอื่น ๆ
+//TODO ส่งออกฟังก์ชันเชื่อมต่อและตัดการเชื่อมต่อฐานข้อมูล MongoDB เพื่อให้สามารถนำไปใช้งานได้ในโมดูลอื่น ๆ
 export { connectDB, disconnectDB };
