@@ -1,6 +1,6 @@
 //TODO นำเข้าชนิดของข้อมูล
 import { Request, Response } from 'express'; //? นำเข้าชนิดของข้อมูล Request และ Response จาก Express framework
-import log4js, { Logger } from 'log4js'; //? logs
+import log4js from 'log4js'; //? logs
 
 //TODO นำเข้าฟังก์ชัน
 import { validationResult } from 'express-validator'; //? นำเข้าฟังก์ชัน validationResult จาก express-validator เพื่อตรวจสอบความถูกต้องของข้อมูล
@@ -9,15 +9,13 @@ import { validationResult } from 'express-validator'; //? นำเข้าฟ�
 // import ExampleModel from '../../models/example/example.model';
 
 //TODO นำเข้า logger จาก log4js
-const logger: Logger = log4js.getLogger('trace');
+// const logger = log4js.getLogger('trace');
 
 //TODO ฟังก์ชัน genToken ที่จะใช้ในการควบคุมการทำงานของเส้นทาง
 export const genToken = (req: Request, res: Response) => {
     // ตรวจสอบความถูกต้องของข้อมูลที่ถูกส่งมากับคำขอ
     const errors = validationResult(req);
-    // logger.level = 'info'; 
-    console.log(logger);
-    logger.trace('This is a trace message');
+    // logger.trace('dfvd')
 
     // หากมีข้อผิดพลาด
     if (!errors.isEmpty()) {

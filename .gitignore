@@ -1,3 +1,6 @@
+# Ignore file logs
+*.log
+
 # Ignore folder node_modules
 /node_modules
 
@@ -6,6 +9,3 @@
 
 # Ignore file package-lock.json
 package-lock.json
-
-# Ignore file log
-# *.log
