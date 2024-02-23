@@ -14,12 +14,12 @@ import routes from './src/routes/index'; //? เส้นทางของแ�
 //TODO กำหนดการตั้งค่าของ log4js เพื่อให้แอปพลิเคชันทำการบันทึก log ตามที่กำหนด
 log4js.configure({
     appenders: {
-        default: { type: 'file', filename: 'log/default.log' },
-        traceFileAppender: { type: 'file', filename: 'log/trace.log' }, // บันทึก log ระดับ trace ไปยังไฟล์ trace.log
-        debugFileAppender: { type: 'file', filename: 'log/debug.log' }, // บันทึก log ระดับ debug ไปยังไฟล์ debug.log
-        infoFileAppender: { type: 'file', filename: 'log/info.log' }, // บันทึก log ระดับ info ไปยังไฟล์ info.log
-        warnFileAppender: { type: 'file', filename: 'log/warn.log' }, // บันทึก log ระดับ warn ไปยังไฟล์ warn.log
-        errorFileAppender: { type: 'file', filename: 'log/error.log' }, // บันทึก log ระดับ error ไปยังไฟล์ error.log
+        default: { type: 'file', filename: 'logs/default.log' },
+        traceFileAppender: { type: 'file', filename: 'logs/trace.log' }, // บันทึก log ระดับ trace ไปยังไฟล์ trace.log
+        debugFileAppender: { type: 'file', filename: 'logs/debug.log' }, // บันทึก log ระดับ debug ไปยังไฟล์ debug.log
+        infoFileAppender: { type: 'file', filename: 'logs/info.log' }, // บันทึก log ระดับ info ไปยังไฟล์ info.log
+        warnFileAppender: { type: 'file', filename: 'logs/warn.log' }, // บันทึก log ระดับ warn ไปยังไฟล์ warn.log
+        errorFileAppender: { type: 'file', filename: 'logs/error.log' }, // บันทึก log ระดับ error ไปยังไฟล์ error.log
         console: { type: 'console' } // แสดง log ทุกระดับที่ console
     },
     categories: {
