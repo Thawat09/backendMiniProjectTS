@@ -1,0 +1,8 @@
+[2024-02-23T14:49:15.257] [ERROR] default - This is an error message
+[2024-02-23T14:52:58.543] [INFO] default - level info : infoFileAppender info
+[2024-02-23T14:52:58.544] [INFO] default - This is a debug message
+[2024-02-23T14:52:58.544] [DEBUG] default - This is a debug message
+[2024-02-23T14:52:58.544] [ERROR] default - This is an error message
+[2024-02-23T14:52:58.544] [TRACE] default - This is a trace message
+[2024-02-23T14:52:58.544] [WARN] default - This is a warn message
+[2024-02-23T14:52:58.718] [INFO] default - ::1 - - "POST /api/v1/token/gen-token HTTP/1.1" 200 29 "" "PostmanRuntime/7.36.3"

@@ -8,4 +8,4 @@
 package-lock.json
 
 # Ignore file log
-*.log
+# *.log

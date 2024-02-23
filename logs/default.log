@@ -1,0 +1,5 @@
+[2024-02-23T15:10:13.339] [INFO] default - ::1 - - "POST /api/v1/token/gen-token HTTP/1.1" 200 29 "" "PostmanRuntime/7.36.3"
+[2024-02-23T15:10:23.616] [INFO] default - ::1 - - "POST /api/v1/token/gen-token HTTP/1.1" 200 29 "" "PostmanRuntime/7.36.3"
+[2024-02-23T15:10:45.697] [INFO] default - ::1 - - "POST /api/v1/token/gen-token HTTP/1.1" 200 29 "" "PostmanRuntime/7.36.3"
+[2024-02-23T15:11:03.343] [INFO] default - ::1 - - "POST /api/v1/token/gen-token HTTP/1.1" 200 29 "" "PostmanRuntime/7.36.3"
+[2024-02-23T15:11:28.252] [INFO] default - ::1 - - "POST /api/v1/token/gen-token HTTP/1.1" 200 29 "" "PostmanRuntime/7.36.3"

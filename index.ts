@@ -14,21 +14,30 @@ import routes from './src/routes/index'; //? เส้นทางของแ�
 //TODO กำหนดการตั้งค่าของ log4js เพื่อให้แอปพลิเคชันทำการบันทึก log ตามที่กำหนด
 log4js.configure({
     appenders: {
-        defaultFileAppender: { type: 'file', filename: '.log/default.log' }, // บันทึก log ทั่วไป
-        errorFileAppender: { type: 'file', filename: '.log/error.log' }, // บันทึก log ที่เกี่ยวกับ error
-        consoleAppender: { type: 'console' }
+        default: { type: 'file', filename: 'logs/default.log' },
+        traceFileAppender: { type: 'file', filename: 'logs/trace.log' }, // บันทึก log ระดับ trace ไปยังไฟล์ trace.log
+        debugFileAppender: { type: 'file', filename: 'logs/debug.log' }, // บันทึก log ระดับ debug ไปยังไฟล์ debug.log
+        infoFileAppender: { type: 'file', filename: 'logs/info.log' }, // บันทึก log ระดับ info ไปยังไฟล์ info.log
+        warnFileAppender: { type: 'file', filename: 'logs/warn.log' }, // บันทึก log ระดับ warn ไปยังไฟล์ warn.log
+        errorFileAppender: { type: 'file', filename: 'logs/error.log' }, // บันทึก log ระดับ error ไปยังไฟล์ error.log
+        console: { type: 'console' } // แสดง log ทุกระดับที่ console
     },
     categories: {
-        default: { appenders: ['defaultFileAppender', 'consoleAppender'], level: 'all' }, // บันทึก log ทั่วไปทุกระดับ
-        http: { appenders: ['consoleAppender'], level: 'all' }, // แสดง log เกี่ยวกับ HTTP ทุกระดับที่ console
-        important: { appenders: ['defaultFileAppender', 'consoleAppender'], level: 'all' }, // บันทึก log ที่มีความสำคัญทั้งลงใน default.log และแสดงที่ console ทุกระดับ
-        error: { appenders: ['errorFileAppender', 'consoleAppender'], level: 'all' } // บันทึก log ที่ระดับ error ที่เกี่ยวกับ error.log และแสดงที่ console ทุกระดับ
+        default: { appenders: ['default', 'console'], level: 'all' },
+        trace: { appenders: ['traceFileAppender'], level: 'trace' }, // log ระดับ trace
+        debug: { appenders: ['debugFileAppender'], level: 'debug' }, // log ระดับ debug
+        info: { appenders: ['infoFileAppender'], level: 'info' }, // log ระดับ info
+        warn: { appenders: ['warnFileAppender'], level: 'warn' }, // log ระดับ warn
+        error: { appenders: ['errorFileAppender'], level: 'error' } // log ระดับ error
     }
 });
 
 //TODO สร้างอินสแตนซ์ของแอปพลิเคชัน Express
 const app = express();
 const port = config.port;
+
+//TODO สร้าง Logger
+const logger = log4js.getLogger();
 
 //TODO จำกัดการเข้าถึง API ให้ทำได้ไม่เกิน 1000 ครั้งต่อ 5 นาที
 const limiter = rateLimit({
@@ -44,7 +53,7 @@ app.use(limiter); //? จำกัดการเข้าถึง API
 app.use(morgan('combined')); //? บันทึกการเข้าถึงแอปพลิเคชัน
 
 //TODO เพิ่ม middleware ของ log4js เพื่อบันทึก log ของแอปพลิเคชัน
-app.use(log4js.connectLogger(log4js.getLogger('http'), { level: 'auto' }));
+app.use(log4js.connectLogger(logger, { level: 'auto' }));
 
 //TODO Routes
 app.use('/', routes); //? เรียกใช้งานเส้นทางของแอปพลิเคชัน
