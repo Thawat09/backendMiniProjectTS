@@ -2,12 +2,12 @@
 import { Router } from 'express'; //? Router จาก Express framework
 
 //TODO นำเข้าคอนโทรลเลอร์
-import example from '../../controllers/example/example.comtroller'; //? indexController จากโฟลเดอร์ controllers/example/example.controller
+import example from '../../controllers/example/example.controller'; //? example จากโฟลเดอร์ controllers/example/example.controller
 
 //TODO สร้างอินสแตนซ์ใหม่ของคลาส Router
 const router = Router();
 
-//TODO ใช้ indexController เมื่อมีการเรียกใช้งานเส้นทางหลัก ('/')
+//TODO ใช้ example เมื่อมีการเรียกใช้งานเส้นทางหลัก ('/')
 router.get('/', example.otherController);
 router.post('/', example.indexController);
 router.put('/', example.indexController);

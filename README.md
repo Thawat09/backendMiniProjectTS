@@ -14,9 +14,10 @@ TypeScript
 10. npm install --save-dev @types/morgan //! บันทึกข้อมูลการร้องขอที่เข้ามายังเซิร์ฟเวอร์
 11. npm install log4js //! การเพิ่มการบันทึก logs ลงไฟล์
 12. npm i --save-dev @types/passport-local //! การรับรองตัวตน
-13. npm install --save-dev @types/passport //! install การรับรองตัวตนแบบ types
-14. npm install body-parser //! การแปลงข้อมูลที่ส่งมาใน body
-15. npm install pm2 -g //! เครื่องมือสำหรับจัดการและให้บริการแอพพลิเคชัน
+13. npm install --save-dev @types/passport-http การรับรองตัวตน
+14. npm install --save-dev @types/passport //! install การรับรองตัวตนแบบ types
+15. npm install body-parser //! การแปลงข้อมูลที่ส่งมาใน body
+16. npm install pm2 -g //! เครื่องมือสำหรับจัดการและให้บริการแอพพลิเคชัน
 
 # Data Base
 1. npm install mongoose express //! mongoose
