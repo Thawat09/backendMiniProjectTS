@@ -8,6 +8,7 @@ import { body } from 'express-validator'; //? validationResult จาก express
 
 //TODO นำเส้นทาง
 import { users } from './users'; //? นำเข้าข้อมูลผู้ใช้งาน (ในที่นี้คือ users) จากไฟล์ users
+import Logger from '../helpers/logs/logs.helper'; //? logs
 
 //TODO กำหนด property 'user' เพิ่มเข้าไปใน interface ของ Express Request
 interface Request extends ExpressRequest {
@@ -16,16 +17,25 @@ interface Request extends ExpressRequest {
 
 //TODO สร้างฟังก์ชัน authenticateUser เพื่อทำการตรวจสอบการยืนยันตัวตนของผู้ใช้
 const authenticateUser = (req: Request, res: Response, next: NextFunction) => {
+    // ใช้ passport.authenticate เพื่อตรวจสอบการยืนยันตัวตนโดยใช้วิธีการ Basic Authentication
     passport.authenticate('basic', { session: false }, (err: any, user: any, info: any) => {
+        // หากเกิดข้อผิดพลาดระหว่างการยืนยันตัวตน
         if (err) {
+            // บันทึกข้อผิดพลาดลงใน logs
+            Logger.logError('Error during authentication:', req);
             return next(err);
         }
+        // หากไม่พบผู้ใช้หรือการยืนยันตัวตนไม่สำเร็จ
         if (!user) {
+            // บันทึกลงใน logs และส่งข้อความ "Unauthorized" พร้อมกับสถานะ 401 กลับไปหา client
+            Logger.logWarn('Unauthorized access attempt:', req);
             return res.status(401).json({ error: 'Unauthorized' });
         }
+        // ถ้าการยืนยันตัวตนสำเร็จ กำหนดข้อมูลผู้ใช้ใน object request (req.user) และไปยัง middleware ถัดไป
         req.user = user;
+        Logger.logInfo(`User "${req.user.username}" has been successfully authenticated.`, req);
         return next();
-    })(req, res, next);
+    })(req, res, next); // ส่ง request, response, และ next function ไปยัง passport.authenticate
 };
 
 //TODO กำหนดการใช้งานของ LocalStrategy โดยระบุ usernameField เป็น 'email' และ passwordField เป็น 'password'
