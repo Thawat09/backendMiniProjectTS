@@ -12,6 +12,7 @@ const router = Router();
 
 //TODO ใช้ token เมื่อมีการเรียกใช้งานเส้นทางหลัก ('/')
 router.post('/gen-token', validateUsernameAndPassword, token.genToken);
+router.post('/verify-token', validateUsernameAndPassword, token.verifyToken);
 
 //TODO ส่งออกอินสแตนซ์ของ router เพื่อให้ใช้งานในส่วนอื่นของแอปพลิเคชัน
 export default router;

@@ -1,12 +1,12 @@
 //TODO เรียกใช้งาน JSON Web Token (JWT) เพื่อตรวจสอบและถอดรหัส token
 import { Request, Response, NextFunction } from 'express';
-import jwt from 'jsonwebtoken';
+import jwt, { Secret, GetPublicKeyOrSecret } from 'jsonwebtoken';
 import config from '../configs/app'
 
 //TODO Middleware สำหรับตรวจสอบและถอดรหัส token
 const checkToken = async (req: Request, res: Response, next: NextFunction) => {
     // รับ token จาก header, query string หรือ body
-    const token = req.headers['authorization'] || req.query.token || req.body.token;
+    const token = req.headers['bearer-authorization'] || req.query.token || req.body.token;
 
     // ถ้าไม่มี token
     if (!token) {
@@ -29,7 +29,7 @@ const checkToken = async (req: Request, res: Response, next: NextFunction) => {
 // ฟังก์ชัน verifyToken สำหรับตรวจสอบและถอดรหัส token โดยใช้ Promise
 const verifyToken = (token: string): Promise<any> => {
     return new Promise((resolve, reject) => {
-        jwt.verify(token, config.jwtSecret, (err: jwt.VerifyErrors | null, decoded: any) => {
+        jwt.verify(token, config.secret_key as Secret, (err: jwt.VerifyErrors | null, decoded: any) => {
             if (err) {
                 reject(err);
             } else {

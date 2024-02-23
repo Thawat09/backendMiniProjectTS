@@ -13,7 +13,7 @@ const config = {
     pgsql_pass: process.env.PGSQL_PASS,
     pgsql_db: process.env.PGSQL_DB,
 
-    jwtSecret: ''
+    secret_key: process.env.SECRET_KEY,
 }
 
 export default config;
