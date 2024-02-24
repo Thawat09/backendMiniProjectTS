@@ -14,6 +14,7 @@ const config = {
     pgsql_db: process.env.PGSQL_DB,
 
     secret_key: process.env.SECRET_KEY,
+    encrypt_token_secret: process.env.ENCRYPT_TOKEN_SECRET
 }
 
 export default config;

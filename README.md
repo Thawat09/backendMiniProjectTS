@@ -25,3 +25,5 @@ TypeScript
 
 # Token
 1. npm install --save-dev @types/jsonwebtoken //! jwt
+2. npm install @types/node //? เพื่อให้ TypeScript เข้าใจโมดูล crypto ได้ถูกต้อง
+3. npm install crypto //? crypto
