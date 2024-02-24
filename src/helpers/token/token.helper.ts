@@ -9,20 +9,29 @@ interface User {
 }
 
 //TODO กำหนดคีย์ลับสำหรับการสร้างและตรวจสอบ token
-const secretKey = config.secret_key;
+const accessTokenSecretKey = config.access_token_secret;
+const accessRefreshTokenSecretKey = config.refresh_token_secret;
+const tokenEXP = config.access_token_exp;
+const refreshTokenEXP = config.refresh_token_exp;
 
 //TODO สร้าง methods object ที่ประกอบด้วยฟังก์ชันสำหรับสร้างและตรวจสอบ token
 const methods = {
     // สร้าง token จากข้อมูลผู้ใช้
     generateToken: (user: User): string => {
         const payload = { id: user.id, username: user };
-        return jwt.sign(payload, secretKey!, { expiresIn: '1h' });
+        return jwt.sign(payload, accessTokenSecretKey!, { expiresIn: tokenEXP });
+    },
+
+    // สร้าง refresh token จากข้อมูลผู้ใช้
+    generateRefreshToken: (user: User): string => {
+        const payload = { id: user.id, username: user };
+        return jwt.sign(payload, accessRefreshTokenSecretKey!, { expiresIn: refreshTokenEXP });
     },
 
     // ตรวจสอบและถอดรหัส token
     verifyToken: (token: string): Promise<any> => {
         return new Promise((resolve, reject) => {
-            jwt.verify(token, secretKey!, (err: VerifyErrors | null, decoded?: any) => {
+            jwt.verify(token, accessTokenSecretKey!, (err: VerifyErrors | null, decoded?: any) => {
                 if (err) {
                     if (err.name === 'TokenExpiredError') {
                         // กรณี token หมดอายุ
@@ -38,9 +47,29 @@ const methods = {
         });
     },
 
+    // ตรวจสอบและถอดรหัส refresh token
+    verifyRefreshToken: (token: string): Promise<any> => {
+        return new Promise((resolve, reject) => {
+            jwt.verify(token, accessRefreshTokenSecretKey!, (err: VerifyErrors | null, decoded?: any) => {
+                if (err) {
+                    if (err.name === 'TokenExpiredError') {
+                        // กรณี token หมดอายุ
+                        reject(new Error('Refresh Token Expired'));
+                    } else {
+                        // กรณีข้อผิดพลาดอื่น ๆ
+                        reject(err);
+                    }
+                } else {
+                    resolve(decoded);
+                }
+            });
+        });
+    },
+
+    // ถอดรหัส token เพื่อแปลงเป็นข้อมูลผู้ใช้
     decodeToken: (token: string): User | null => {
         try {
-            const decoded = jwt.verify(token, secretKey!) as { id: string, username: string };
+            const decoded = jwt.verify(token, accessTokenSecretKey!) as { id: string, username: string };
             // ดาวน์แคสตัวเองเพื่อให้ TypeScript เข้าใจว่า decoded มีรูปแบบของข้อมูลเป็นแบบ { id: string, username: string }
             return { id: decoded.id, username: decoded.username };
         } catch (error) {
@@ -50,6 +79,20 @@ const methods = {
         }
     },
 
+    // ถอดรหัส refresh token เพื่อแปลงเป็นข้อมูลผู้ใช้
+    decodeRefreshToken: (token: string): User | null => {
+        try {
+            const decoded = jwt.verify(token, accessRefreshTokenSecretKey!) as { id: string, username: string };
+            // ดาวน์แคสตัวเองเพื่อให้ TypeScript เข้าใจว่า decoded มีรูปแบบของข้อมูลเป็นแบบ { id: string, username: string }
+            return { id: decoded.id, username: decoded.username };
+        } catch (error) {
+            // กรณีถ้าเกิดข้อผิดพลาดในการถอดรหัส token หรือ token ไม่ถูกต้อง
+            console.error('Error decoding refresh token:', error);
+            return null;
+        }
+    },
+
+    // ฟังก์ชันสำหรับเข้ารหัสข้อความโดยใช้วิธีการเข้ารหัสที่ปลอดภัย
     encodeSecure: async (text: string, storedBase64Key: string): Promise<string> => {
         try {
             const key = Buffer.from(storedBase64Key, 'base64');
@@ -63,6 +106,7 @@ const methods = {
         }
     },
 
+    // ฟังก์ชันสำหรับถอดรหัสข้อความที่ถูกเข้ารหัสด้วยวิธีการเข้ารหัสที่ปลอดภัย
     decodeSecure: async (encodedText: string, storedBase64Key: string): Promise<string> => {
         try {
             const key = Buffer.from(storedBase64Key, 'base64');

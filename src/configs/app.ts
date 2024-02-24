@@ -13,8 +13,12 @@ const config = {
     pgsql_pass: process.env.PGSQL_PASS,
     pgsql_db: process.env.PGSQL_DB,
 
-    secret_key: process.env.SECRET_KEY,
-    encrypt_token_secret: process.env.ENCRYPT_TOKEN_SECRET
+    access_token_secret: process.env.ACCESS_TOKEN_SECRET,
+    refresh_token_secret: process.env.REFRESH_TOKEN_SECRET,
+    encrypt_token_secret: process.env.ENCRYPT_TOKEN_SECRET,
+
+    access_token_exp: process.env.ACCESS_TOKEN_EXP,
+    refresh_token_exp: process.env.REFRESH_TOKEN_EXP,
 }
 
 export default config;

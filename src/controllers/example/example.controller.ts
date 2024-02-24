@@ -19,7 +19,7 @@ export const indexController = (req: Request, res: Response) => {
     }
 
     // หากไม่มีข้อผิดพลาด ส่งคำตอบกลับด้วยข้อความ "Hello, TypeScript Express!"
-    res.send(`Hello ${req.method}, TypeScript Express!`);
+    return res.send(`Hello ${req.method}, TypeScript Express!`);
 };
 
 //TODO ฟังก์ชัน otherController ที่จะใช้ในการดึงข้อมูลจากฐานข้อมูล
@@ -28,12 +28,12 @@ export const otherController = async (req: Request, res: Response) => {
         // ดึงข้อมูลตัวอย่างทั้งหมดจากฐานข้อมูล
         const examples = await ExampleModel.findAll();
         // ส่งข้อมูลกลับเป็น JSON
-        res.json(examples);
+        return res.json(examples);
     } catch (error) {
         // หากเกิดข้อผิดพลาดในระหว่างดึงข้อมูล
         console.error(error);
         // ส่งคำตอบกลับด้วยสถานะ 500 (Internal Server Error) พร้อมกับข้อความแสดงข้อผิดพลาด
-        res.status(500).json({ message: 'Internal server error' });
+        return res.status(500).json({ message: 'Internal server error' });
     }
 };
 
