@@ -1,9 +1,9 @@
-//TODO เรียกใช้งาน JSON Web Token (JWT) เพื่อตรวจสอบและถอดรหัส token
 import { Request, Response, NextFunction } from 'express';
-import jwt, { Secret, GetPublicKeyOrSecret } from 'jsonwebtoken';
 import config from '../configs/app'
+import tokenHelper from '../helpers/token/token.helper';
 
 const accessTokenSecretKey = config.access_token_secret;
+const storedBase64Key = config.encrypt_token_secret;
 
 //TODO Middleware สำหรับตรวจสอบและถอดรหัส token
 const checkToken = async (req: Request, res: Response, next: NextFunction) => {
@@ -17,7 +17,10 @@ const checkToken = async (req: Request, res: Response, next: NextFunction) => {
 
     try {
         // ตรวจสอบและถอดรหัส token
-        const decoded = await verifyToken(token);
+        const decryptedString = await tokenHelper.decodeSecure(token, storedBase64Key!);
+
+        // ตรวจสอบและถอดรหัส token
+        const decoded = await tokenHelper.verifyToken(decryptedString);
 
         // ถ้า token ถูกต้องให้เก็บข้อมูลผู้ใช้ใน request object และเรียกฟังก์ชั่นต่อไปในการทำงาน
         req.user = decoded;
@@ -26,19 +29,6 @@ const checkToken = async (req: Request, res: Response, next: NextFunction) => {
         // ถ้า token ไม่ถูกต้อง
         return res.status(401).json({ success: false, message: 'Token ไม่ถูกต้อง' });
     }
-};
-
-// ฟังก์ชัน verifyToken สำหรับตรวจสอบและถอดรหัส token โดยใช้ Promise
-const verifyToken = (token: string): Promise<any> => {
-    return new Promise((resolve, reject) => {
-        jwt.verify(token, accessTokenSecretKey as Secret, (err: jwt.VerifyErrors | null, decoded: any) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(decoded);
-            }
-        });
-    });
 };
 
 //TODO ส่งออกฟังก์ชัน checkToken เพื่อให้สามารถนำไปใช้ในโมดูลอื่น ๆ ได้
