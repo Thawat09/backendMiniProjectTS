@@ -13,6 +13,10 @@ const config = {
     pgsql_pass: process.env.PGSQL_PASS,
     pgsql_db: process.env.PGSQL_DB,
 
+    redis_host: process.env.REDIS_HOST,
+    redis_port: process.env.REDIS_PORT,
+    redis_pass: process.env.REDIS_PASS,
+
     access_token_secret: process.env.ACCESS_TOKEN_SECRET,
     refresh_token_secret: process.env.REFRESH_TOKEN_SECRET,
     encrypt_token_secret: process.env.ENCRYPT_TOKEN_SECRET,
