@@ -4,8 +4,8 @@ import { Request, Response } from 'express'; // นำเข้าชนิด�
 //TODO นำเข้าฟังก์ชัน
 import { validationResult } from 'express-validator'; // นำเข้าฟังก์ชัน validationResult จาก express-validator เพื่อตรวจสอบความถูกต้องของข้อมูล
 
-// นำเข้า redisClient จากไฟล์ redis.ts
-import redisClient from '../../configs/redis';
+//TODO นำเข้าเส้นทาง
+import redisHelper from '../../helpers/redis/redis.helper'
 
 //TODO ฟังก์ชัน indexController ที่จะใช้ในการควบคุมการทำงานของเส้นทาง
 export const getAll = async (req: Request, res: Response) => {
@@ -18,10 +18,11 @@ export const getAll = async (req: Request, res: Response) => {
         return res.status(400).json({ errors: errors.array() });
     }
 
-    const keyPattern: string = "1*";
+    const key: string = req.body.key;
 
     try {
-        const keys = await redisClient.keys(keyPattern);
+        const keys = await redisHelper.get(key);
+
         res.status(200).json({ data: keys });
     } catch (err) {
         res.status(500).json({ error: 'Error accessing Redis' });

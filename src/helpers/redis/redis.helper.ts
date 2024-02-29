@@ -1,60 +1,66 @@
 const redisClient: any = require('../../configs/redis').default;
 
 const methods = {
-    get: (key: string): Promise<string | null> => {
-        return new Promise((resolve, reject) => {
-            redisClient.get(key, (err: any, reply: any) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve(reply);
-                }
-            });
-        });
+    // สร้างฟังก์ชันเพื่อดึงข้อมูลจาก Redis ตามรูปแบบที่กำหนด
+    gets: async (key: string) => {
+        try {
+            const keys = await redisClient.keys(key);
+
+            return keys;
+        } catch (error) {
+            throw new Error('Error accessing Redis');
+        }
     },
-    set: (key: string, value: string): Promise<string> => {
-        return new Promise((resolve, reject) => {
-            redisClient.set(key, value, (err: any, reply: any) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve(reply);
-                }
-            });
-        });
+
+    // ฟังก์ชันสำหรับเรียกข้อมูลจาก Redis ตามคีย์
+    get: async (key: string) => {
+        try {
+            const data = await redisClient.get(key);
+
+            return data;
+        } catch (error) {
+            throw new Error('Error accessing Redis');
+        }
     },
-    incr: (key: string): Promise<number> => {
-        return new Promise((resolve, reject) => {
-            redisClient.incr(key, (err: any, reply: any) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve(reply);
-                }
-            });
-        });
+
+    // ฟังก์ชันสำหรับเซ็ตข้อมูลใน Redis
+    set: async (key: string, value: string) => {
+        try {
+            await redisClient.set(key, value);
+        } catch (error) {
+            throw new Error('Error accessing Redis');
+        }
     },
-    decr: (key: string): Promise<number> => {
-        return new Promise((resolve, reject) => {
-            redisClient.decr(key, (err: any, reply: any) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve(reply);
-                }
-            });
-        });
+
+    // ฟังก์ชันสำหรับลบข้อมูลจาก Redis
+    delete: async (key: string) => {
+        try {
+            await redisClient.del(key);
+        } catch (error) {
+            throw new Error('Error accessing Redis');
+        }
     },
-    delete: (key: string): Promise<number> => {
-        return new Promise((resolve, reject) => {
-            redisClient.del(key, (err: any, reply: any) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve(reply);
-                }
-            });
-        });
+
+    // ฟังก์ชันสำหรับเพิ่มค่าของคีย์ใน Redis (Increment)
+    incr: async (key: string) => {
+        try {
+            const incrementedValue = await redisClient.incr(key);
+
+            return incrementedValue;
+        } catch (error) {
+            throw new Error('Error accessing Redis');
+        }
+    },
+
+    // ฟังก์ชันสำหรับลดค่าของคีย์ใน Redis (Decrement)
+    decr: async (key: string) => {
+        try {
+            const decrementedValue = await redisClient.decr(key);
+
+            return decrementedValue;
+        } catch (error) {
+            throw new Error('Error accessing Redis');
+        }
     }
 };
 
