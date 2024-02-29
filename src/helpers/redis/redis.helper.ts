@@ -2,7 +2,7 @@ const redisClient: any = require('../../configs/redis').default;
 
 const methods = {
     // สร้างฟังก์ชันเพื่อดึงข้อมูลจาก Redis ตามรูปแบบที่กำหนด
-    gets: async (key: string) => {
+    getPetternKeys: async (key: string) => {
         try {
             const keys = await redisClient.keys(key);
 

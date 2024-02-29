@@ -8,7 +8,8 @@ import redis from '../../controllers/redis/redis.controller'; //? redis จา�
 const router = Router();
 
 //TODO ใช้ redis เมื่อมีการเรียกใช้งานเส้นทางหลัก ('/')
-router.get('/', redis.getAll);
+router.get('/get-redis-all', redis.getAll);
+router.get('/get-redis-key', redis.getKey);
 
 //TODO ส่งออกอินสแตนซ์ของ router เพื่อให้ใช้งานในส่วนอื่นของแอปพลิเคชัน
 export default router;
