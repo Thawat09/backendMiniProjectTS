@@ -39,10 +39,10 @@ const port = config.port;
 //TODO สร้าง Logger
 const logger = log4js.getLogger();
 
-//TODO จำกัดการเข้าถึง API ให้ทำได้ไม่เกิน 1000 ครั้งต่อ 5 นาที
+//TODO จำกัดการเข้าถึง API ให้ทำได้ไม่เกิน 100 ครั้งต่อ 1 นาที
 const limiter = rateLimit({
-    windowMs: 5 * 60 * 1000, //! 5 นาที
-    max: 1000
+    windowMs: 1 * 60 * 1000, //! 5 นาที
+    max: 100
 });
 
 //TODO Middleware

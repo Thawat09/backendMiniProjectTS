@@ -23,7 +23,7 @@ router.use(`/api/${config.version}/example`, authenticateUser, checkToken, examp
 router.use(`/api/${config.version}/token`, authenticateUser, tokenRouter);
 
 //TODO ติดตั้ง redisRouter ภายใต้เส้นทาง API version ที่ระบุ
-router.use(`/api/${config.version}/redis`, authenticateUser, redisRouter);
+router.use(`/api/${config.version}/redis`, authenticateUser, checkToken, redisRouter);
 
 //TODO ส่งออกอินสแตนซ์ของ router เพื่อให้ใช้งานในส่วนอื่นของแอปพลิเคชัน
 export default router;
