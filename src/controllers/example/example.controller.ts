@@ -6,6 +6,7 @@ import { validationResult } from 'express-validator'; // นำเข้าฟ�
 
 //TODO การนำเข้าเส้นทาง
 import ExampleModel from '../../models/example/example.model';
+import { connectDB, disconnectDB } from '../../configs/mongoose';
 
 //TODO ฟังก์ชัน indexController ที่จะใช้ในการควบคุมการทำงานของเส้นทาง
 export const indexController = (req: Request, res: Response) => {
@@ -25,10 +26,22 @@ export const indexController = (req: Request, res: Response) => {
 //TODO ฟังก์ชัน otherController ที่จะใช้ในการดึงข้อมูลจากฐานข้อมูล
 export const otherController = async (req: Request, res: Response) => {
     try {
+        const connection = await connectDB();
+
+        if (!connection) {
+            return res.status(500).json({ message: 'Failed to connect to MongoDB' });
+        }
+
+        const collection = connection.collection("eseal_user_activity_log");
+        const uniqueActivityNames = await collection.find({}).toArray();
+
         // ดึงข้อมูลตัวอย่างทั้งหมดจากฐานข้อมูล
         const examples = await ExampleModel.findAll();
+
+        const result = { sqlPg: examples, mongo: uniqueActivityNames }
+
         // ส่งข้อมูลกลับเป็น JSON
-        return res.json(examples);
+        return res.json(result);
     } catch (error) {
         // หากเกิดข้อผิดพลาดในระหว่างดึงข้อมูล
         console.error(error);

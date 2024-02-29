@@ -1,18 +1,20 @@
 //TODO นำเข้า mongoose เพื่อใช้ในการเชื่อมต่อกับ MongoDB
 import mongoose from 'mongoose';
 
+//TODO นำเข้าค่า configuration จากไฟล์ app.js
+import config from './app';
+
 //TODO ฟังก์ชันเชื่อมต่อกับฐานข้อมูล MongoDB
 const connectDB = async () => {
     try {
-        // URI สำหรับเชื่อมต่อกับ MongoDB
-        const uri = 'mongodb://localhost:27017/ชื่อฐานข้อมูล';
+        const url = config.atlas_url_mongo;
 
-        // เชื่อมต่อกับ MongoDB โดยใช้ URI
-        await mongoose.connect(uri);
+        await mongoose.connect(url);
+
         console.log('MongoDB is Connected...');
+        return mongoose.connection;
     } catch (err) {
-        // หากเกิดข้อผิดพลาดในระหว่างการเชื่อมต่อ แสดงข้อความผิดพลาดและออกจากโปรแกรม
-        console.error(err.message);
+        console.error('MongoDB Connected error:', err);
         process.exit(1);
     }
 };
@@ -22,10 +24,11 @@ const disconnectDB = async () => {
     try {
         // ตัดการเชื่อมต่อกับ MongoDB
         await mongoose.disconnect();
+
         console.log('MongoDB is Disconnected...');
     } catch (err) {
         // หากเกิดข้อผิดพลาดในระหว่างการตัดการเชื่อมต่อ แสดงข้อความผิดพลาดและออกจากโปรแกรม
-        console.error(err.message);
+        console.error('MongoDB Disconnected error:', err);
         process.exit(1);
     }
 };

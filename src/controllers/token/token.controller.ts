@@ -23,10 +23,11 @@ export const genToken = async (req: Request, res: Response) => {
     // สร้าง token จากข้อมูลผู้ใช้ที่ถูกส่งมากับคำขอ
     const user = req.body.username; // สมมติว่าข้อมูลผู้ใช้ถูกส่งมาในรูปแบบ { id: string, username: string }
     const token = tokenHelper.generateToken(user);
+    console.log(token, ' token');
 
     // เรียกใช้งาน encodeSecure และเก็บผลลัพธ์ไว้ในตัวแปร encodedString
     const encodedString = await tokenHelper.encodeSecure(token, storedBase64Key!);
-    console.log(encodedString);
+    console.log(encodedString, ' encodedString');
 
     // ส่งคำตอบกลับพร้อมกับ token
     return res.status(200).json({ encodedString });

@@ -7,6 +7,8 @@ const config = {
     domain_api: process.env.DOMAIN_API,
     version: process.env.API_VERSION,
 
+    atlas_url_mongo: `mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@${process.env.MONGO_HOST1}:${process.env.MONGO_PORT1}/${process.env.MONGO_DATABASE}?authSource=${process.env.MONGO_BASE}`,
+
     pgsql_host: process.env.PGSQL_HOST,
     pgsql_port: process.env.PGSQL_PORT,
     pgsql_user: process.env.PGSQL_USER,

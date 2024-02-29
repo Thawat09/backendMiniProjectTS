@@ -5,7 +5,7 @@ import { Request, Response } from 'express'; // นำเข้าชนิด�
 import { validationResult } from 'express-validator'; // นำเข้าฟังก์ชัน validationResult จาก express-validator เพื่อตรวจสอบความถูกต้องของข้อมูล
 
 //TODO นำเข้าเส้นทาง
-import redisHelper from '../../helpers/redis/redis.helper'
+import redisHelper from '../../helpers/redis/redis.helper' // redis helper
 
 //TODO ฟังก์ชัน indexController ที่จะใช้ในการควบคุมการทำงานของเส้นทาง
 export const getAll = async (req: Request, res: Response) => {
