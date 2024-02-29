@@ -47,6 +47,8 @@ export const otherController = async (req: Request, res: Response) => {
         console.error(error);
         // ส่งคำตอบกลับด้วยสถานะ 500 (Internal Server Error) พร้อมกับข้อความแสดงข้อผิดพลาด
         return res.status(500).json({ message: 'Internal server error' });
+    } finally {
+        await disconnectDB();
     }
 };
 
