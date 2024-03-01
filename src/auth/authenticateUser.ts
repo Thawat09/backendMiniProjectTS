@@ -4,7 +4,6 @@ import { Request as ExpressRequest, Response, NextFunction } from 'express';
 //TODO นำเข้าโมดูล
 import passport from 'passport'; //? passport เพื่อใช้ในการจัดการการยืนยันตัวตน
 import { BasicStrategy } from 'passport-http'; //? BasicStrategy ของ http authentication จาก passport-http
-import { body } from 'express-validator'; //? validationResult จาก express-validator เพื่อตรวจสอบความถูกต้องของข้อมูล
 
 //TODO นำเส้นทาง
 import { users } from './users'; //? นำเข้าข้อมูลผู้ใช้งาน (ในที่นี้คือ users) จากไฟล์ users
@@ -53,11 +52,5 @@ passport.use(new BasicStrategy(
     }
 ));
 
-// ตรวจสอบค่าของ username และ password
-const validateUsernameAndPassword = [
-    body('username').notEmpty().withMessage('Username is required'),
-    body('password').notEmpty().withMessage('Password is required'),
-];
-
 //TODO ส่งออกฟังก์ชัน authenticateUser เพื่อให้สามารถนำไปใช้ในโมดูลอื่น ๆ ได้
-export { authenticateUser, validateUsernameAndPassword };
+export { authenticateUser };
